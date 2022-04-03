@@ -1,14 +1,15 @@
-<div class="container px-5 px-sm-0">
- <div id="error_explanation">
-  <% if @book.errors.any? %>
-    <h3>
-     <%= @book.errors.count%>
-      <% if @book.errors.count == 1 %>
-       error prohibited this obj from being saved:
-      <% else %>
-       errors prohibited this obj from being saved:
-     <% end %>
-    </h3>
+  <div class="container px-5 px-sm-0">
+
+    <div id="error_explanation">
+          <% if @book.errors.any? %>
+          <h3>
+            <%= @book.errors.count%>
+            <% if @book.errors.count == 1 %>
+            error prohibited this obj from being saved:
+            <% else %>
+            errors prohibited this obj from being saved:
+            <% end %>
+          </h3>
             <ul>
               <% @book.errors.full_messages.each do |message| %>
               <li><%= message %></li>
@@ -16,34 +17,35 @@
             </ul>
           <% end %>
         </div>
- <div class="row">
-  <div class="col-md-3">
-   <%= render 'users/sidebar',book:@book,user:@user %>
-    </div>
-    <div class="col-md-8 offset-md-1">
-      <h2>Users</h2>
-      <table class="table">
-       <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Opinion</th>
-      <th colspan="3"></th>
-    </tr>
-       </thead>
-       <tbody>
-          <% @books.each do |book| %>
-       <tr>
-        <td><%= link_to user_path(book.user.id) do %>
-        <%= image_tag book.user.get_image(40,40) %>
-        <% end %></td>
 
-        <td><%= link_to book.title,book_path(book.id) %></td>
-        <td><%= book.body %></td>
-       </tr>
-       <% end %>
-       </tbody>
-      </table>
+    <div class="row">
+      <%= render 'users/user_info', user: @user %>
+      <div class="col-md-8 offset-md-1">
+        <h2>Books</h2>
+        <table class="table table-hover table-inverse">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Opinion</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <% @books.each do |book| %>
+          <tbody>
+            <tr>
+              <% if book.user.profile_image.attached? %>
+              <td><%= link_to image_tag(book.user.profile_image, class: "attachment user profile_image fallback", size: "50x50"),user_path(book.id) %></td>
+              <% else %>
+              <td><%= link_to image_tag('no_image', size: "40x40"), user_path(book.id) %></td>
+              <% end %>
+              <td><%=link_to book.title, book_path(book.id) %></td>
+              <td><%=book.body %></td>
+            </tr>
+
+          </tbody>
+        <% end %>
+        </table>
+      </div>
     </div>
   </div>
-</div>

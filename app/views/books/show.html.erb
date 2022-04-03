@@ -1,58 +1,20 @@
-<div class="container">
- <div class="row">
-  <div class="col-md-3">
-   <h2>User info</h2>
-    <%= image_tag @user.get_image(63,63) %>
-    <table class="table">
-     <tbody>
-      <tr></tr>
-       <tr>
-      	 <th>name</th>
-      	 <th><%= @user.name %></th>
-       </tr>
-       <tr>
-      	 <th>introduction</th>
-      	 <th><%= current_user.Introduction %></th>
-       </tr>
-     </tbody>
-    </table>
+  <div class="container px-5 px-sm-0">
     <div class="row">
-     <%= link_to edit_user_path(@user.id),class:"btn btn-outline-secondary btn-block" do %>
-       <i class="fas fa-user-cog"></i>
-     <% end %>
-    </div>
-     <h2 class="mt-3">New book</h2>
-
-
-     <%= form_with(model: @new_book, local: true) do |f| %>
-     <div class="form-group">
-       <label for="book_title">Title</label></br>
-       <%= f.text_field :title %>
-     </div>
-     <div class="form-group">
-       <label for="book_opinion">Opinion</label></br>
-        <%= f.text_area :body %>
-     </div>
-     <div class="form-group">
-       <%= f.submit 'Create Book',class:"btn btn-success" %>
-     </div>
-     <% end %>
- </div>
-
+     <%= render 'users/user_info', user: @user %>
       <div class="col-md-8 offset-md-1">
         <h2>Book detail</h2>
         <table class="table">
           <tbody>
             <tr>
               <td>
-                <% if @book.user.image.attached? %>
+                <% if @book.user.profile_image.attached? %>
                   <%= link_to user_path(@book.user_id) do %>
-                    <%= image_tag @book.user.image,class: "attachment user image fallback", size: "40x40" %><br>
+                    <%= image_tag @book.user.profile_image,class: "attachment user profile_image fallback", size: "100x100" %><br>
                     <%= @book.user.name %>
                   <% end %>
                 <% else %>
                   <%= link_to user_path(@book.user_id) do %>
-                    <%= image_tag 'no-image-icon', class: "attachment user image fallback", size: "40x40" %><br>
+                    <%= image_tag 'no_image', class: "attachment user profile_image fallback", size: "40x40" %><br>
                     <%= @book.user.name %>
                   <% end %>
                 <% end %>

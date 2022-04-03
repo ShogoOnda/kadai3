@@ -1,10 +1,11 @@
-<h2>User info</h2>
-  <% if user.image.attached? %>
-       <%= image_tag user.image,size: "100x100" %>
-      <% else %>
-       <%= image_tag 'no_image', size: "100x100" %>
-      <% end %>
-    <table class="table">
+<div class="col-md-3">
+  <h2>User info</h2>
+  <% if user.profile_image.attached? %>
+    <%= image_tag user.profile_image,size: "100x100" %>
+  <% else %>
+    <%= image_tag 'no_image', size: "100x100" %>
+  <% end %>
+  <table class="table">
     <tbody>
       <tr></tr>
       <tr>
@@ -13,7 +14,7 @@
       </tr>
       <tr>
         <th>introduction</th>
-        <th><%=user.Introduction %></th>
+        <th><%=user.introduction %></th>
       </tr>
     </tbody>
    </table>
@@ -39,4 +40,5 @@
    <div class="form-group">
    <%= f.submit 'Create Book', class: "btn btn-success" %>
    </div>
-  <% end %>
+   <% end %>
+</div>
