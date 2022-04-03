@@ -1,4 +1,3 @@
-<p id="notice"></p>
 <div class="container">
  <div class="row">
   <div class="col-md-3">
@@ -40,25 +39,33 @@
      <% end %>
  </div>
 
- <div class="col-md-8 offset-md-1">
-  <h2>Book detail</h2>
-   <table class="table">
-   <tbody>
-     <tr>
-      <td><%= image_tag @book.user.get_image(40,40) %><br>
-       <%= link_to @user.name, user_path(@user.id) %>
-      </td>
-      <td><%= link_to @book.title,book_path(@book.id) %></td>
-      <td><%= @book.body %></td>
-        <% if @user == current_user %>
-       <td><%= link_to "Edit",edit_book_path(@book.id),class:"btn btn-success" %></td>
-       <td> <%= link_to "Destroy",book_path(@book.id),method: :delete,"data-confirm"=>"本当に削除しますか？",class:"btn btn-danger" %></td></br>
-       </tr>
-        <% end %>
-      </tbody>
-      </table>
-   </div>
+      <div class="col-md-8 offset-md-1">
+        <h2>Book detail</h2>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <% if @book.user.image.attached? %>
+                  <%= link_to user_path(@book.user_id) do %>
+                    <%= image_tag @book.user.image,class: "attachment user image fallback", size: "40x40" %><br>
+                    <%= @book.user.name %>
+                  <% end %>
+                <% else %>
+                  <%= link_to user_path(@book.user_id) do %>
+                    <%= image_tag 'no-image-icon', class: "attachment user image fallback", size: "40x40" %><br>
+                    <%= @book.user.name %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td><%=link_to @book.title, book_path(@book.id) %></td>
+              <td><%=@book.body %></td>
+              <% if @book.user.id == current_user.id %>
+              <td><%=link_to "Edit", edit_book_path(@book.id), class: "btn btn-sm btn-success" %></td>
+              <td><%=link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "本当に削除しますか？", class: "btn btn-sm btn-danger" %></td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
- </div>
-</div>
-
